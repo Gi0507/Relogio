@@ -1,85 +1,25 @@
-<header>
-    <div class="headre">
-        <div class="board">
-            <div class="btne">
-                <h2>Um novo estilo ao seu trabalho</h2>
-                <p>Compre produtos de qualidade e com preços acessíveis</p>
-                <button>Compre Agora &#8594;</button>
-            </div>
-            <div class="btnd">
-                <img src="images/gaming-msi-header.png" alt="Produto em destaque">
-            </div>
-        </div>
+<div class="navbar" [class.show-menu]="isMenuOpen">
+  <div class="Header">
+    <h1 class="logo">BLUE<span>STOR</span></h1>
+    
+    <nav class="nav-links">
+      <ul>
+        <li><a routerLink="/vitrine">Home</a></li>
+        <li><a routerLink="/vitrine">About</a></li>
+        <li><a routerLink="/vitrine">Contact</a></li>
+        <li><a routerLink="/vitrine">Products</a></li>
+        <li><a routerLink="/login">Account</a></li>
+        <li><a routerLink="/vitrine">Cart</a></li>
+      </ul>
+    </nav>
+    
+    <div class="icons">   
+      <img src="cart.png" alt="Carrinho">
+      <img src="menu.png" class="menu-icon" alt="Menu" (click)="toggleMenu()">
     </div>
-</header>
+  </div>
+</div>
 
-
-    <main>
-        <!-- EXPOSITOR -->
-        <div class="background">
-            <div class="conteudo">
-                <div class="col col-3">
-                    <img src="images/products/product-1.png" alt="Expositor 1">
-                    <img src="images/products/product-2.png" alt="Expositor 2">
-                    <img src="images/products/product-3.png" alt="Expositor 3">
-                </div>
-            </div>
-        </div>
-
-        <div class="produtos conteudo">
-            <h3 class="titulo">Produtos Selecionados</h3>
-            <div class="underline"></div>
-            <div class="col col4">
-                <div class="produto">
-                    <img src="images/products/product-4.png" alt="Kit Gamer">
-                    <p class="nome_produtos">Kit Gamer</p>
-                    <div class="estrelas">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
-                    <div class="preco"><span>R$</span>180,00</div>
-                </div>
-                
-                <div class="produto">
-                    <img src="images/products/product-5.png" alt="Placa de Vídeo RTX">
-                    <p class="nome_produtos">Placa de Vídeo RTX</p>
-                    <div class="estrelas">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
-                    <div class="preco"><span>R$</span>1850,00</div>
-                </div>
-                
-                <div class="produto">
-                    <img src="images/products/product-6.png" alt="Controle PS5 DualSense">
-                    <p class="nome_produtos">Controle PS5 DualSense</p>
-                    <div class="estrelas">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                    <div class="preco"><span>R$</span>420,00</div>
-                </div>
-                
-                <div class="produto">
-                    <img src="images/products/product-7.png" alt="Cadeira Gamer">
-                    <p class="nome_produtos">Cadeira Gamer</p>
-                    <div class="estrelas">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
-                    <div class="preco"><span>R$</span>950,00</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- PRODUTOS EM DESTAQUE -->
-        <div class="produtos conteudo">
-            <h3 class="titulo">Produtos em Destaque</h3>
-            <div class="underline"></div>
-            <div class="col col4">
-            </div>
-        </div>
-        <div class="background">
-            <div class="conteudo">     
-                <div class="botao segundo">
-                    <div class="btne ">
-                        <h2>Um novo estilo ao seu trabalho</h2>
-                        <p>Compre produtos de qualidade e com preços acessíveis</p>
-                        <button>Compre Agora &#8594;</button>
-                    </div>
-                    <div class="btnd ">
-                        <img src="images/exclusive.png" alt="Produto em destaque">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-</main>
+<body>
+  <router-outlet></router-outlet>
+</body>

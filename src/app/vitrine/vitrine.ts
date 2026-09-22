@@ -6,6 +6,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './vitrine.html',
-  styleUrl: './vitrine.css',
+  styleUrl: './vitrine.css'
 })
 export class Vitrine {}
