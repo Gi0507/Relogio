@@ -1,0 +1,84 @@
+
+    <main>
+        <!-- EXPOSITOR -->
+        <div class="background">
+            <div class="conteudo">
+                <div class="col col-3">
+                    <img src="images/products/product-1.png" alt="Expositor 1">
+                    <img src="images/products/product-2.png" alt="Expositor 2">
+                    <img src="images/products/product-3.png" alt="Expositor 3">
+                </div>
+            </div>
+        </div>
+        <div class="produtos conteudo">
+            <h3 class="titulo">Produtos Selecionados</h3>
+            <div class="underline"></div>
+            <div class="col col4">
+                <!-- Imagem do Relógio -->
+                <div class="img-container p-3 text-center">
+                    <img [src]="relogio.imagem" [alt]="relogio.nome" class="img-fluid rounded product-img">
+                </div>
+
+                <!-- Detalhes do Produto -->
+                <div class="card-body d-flex flex-column justify-content-between pt-0">
+                    <div>
+                        <h5 class="card-title fs-6 fw-bold text-dark">{{ relogio.nome }}</h5>
+                        <p class="card-text text-muted small lh-sm">{{ relogio.descritivo }}</p>
+                    </div>
+
+                    <div class="mt-3">
+                        <!-- Avaliação por Estrelas -->
+                        <div class="estrelas text-warning mb-2">
+                            {{ renderizarEstrelas(relogio.estrelas) }}
+                        </div>
+
+                        <!-- Exibição de Preço -->
+                        <div class="d-flex align-items-baseline gap-2">
+                            <ng-container *ngIf="relogio.promo > 0; else precoComum">
+                                <span class="text-muted text-decoration-line-through small">
+                                    {{ relogio.valor | currency:'BRL':'symbol':'1.2-2' }}
+                                </span>
+                                <span class="fs-5 fw-bold text-primary">
+                                    {{ relogio.promo | currency:'BRL':'symbol':'1.2-2' }}
+                                </span>
+                            </ng-container>
+
+                            <ng-template #precoComum>
+                                <span class="fs-5 fw-bold text-dark">
+                                    {{ relogio.valor | currency:'BRL':'symbol':'1.2-2' }}
+                                </span>
+                            </ng-template>
+                        </div>
+
+                        <!-- Botão Adicionar ao Carrinho -->
+                        <button class="btn btn-primary w-100 mt-3 fw-semibold">
+                            Comprar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRODUTOS EM DESTAQUE -->
+        <div class="produtos conteudo">
+            <h3 class="titulo">Produtos em Destaque</h3>
+            <div class="underline"></div>
+            <div class="col col4">
+            </div>
+        </div>
+
+        <div class="background">
+            <div class="conteudo">
+                <div class="botao segundo">
+                    <div class="btne ">
+                        <h2>Um novo estilo ao seu trabalho</h2>
+                        <p>Compre produtos de qualidade e com preços acessíveis</p>
+                        <button>Compre Agora &#8594;</button>
+                    </div>
+                    <div class="btnd ">
+                        <img src="images/exclusive.png" alt="Produto em destaque">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
