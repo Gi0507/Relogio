@@ -4,6 +4,7 @@ import { routes } from './app.routes'; // Importa o array de rotas
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes)
+    provideRouter(routes),
+    provideHttpClient()
   ]
 };

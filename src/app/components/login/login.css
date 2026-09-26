@@ -1,0 +1,10 @@
+.underline{
+    width: 100px;
+    height: 5px;
+    background-color: #004c94;
+    border-radius: 9999pc;
+    margin: 8px auto 0 auto;
+}
+.alert{
+    margin: 1rem 0;
+}

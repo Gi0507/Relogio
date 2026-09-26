@@ -1,0 +1,25 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "Relógio Clássico",
+            "price": 199.99,
+            "promo": 0,
+            "stars": 4
+        },
+        {
+            "id": 2,
+            "name": "Relógio Esportivo",
+            "price": 249.99,
+            "promo": 20,
+            "stars": 5
+        },
+        {
+            "id": 3,
+            "name": "Relógio Digital",
+            "price": 149.99,
+            "promo": 10,
+            "stars": 3
+        }
+    ]
+}

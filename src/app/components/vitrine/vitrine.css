@@ -54,7 +54,6 @@
 
 
 
-/*expossitor*/
 .background{
     background-color: #2c2c2c;
 }
@@ -81,7 +80,6 @@
 main{
     background-color: #ebebeb;
 }
-/* PRODUTOS SELECIONADOS */
 .col4{
     grid-template-columns: repeat(4,1fr);
     gap: 3rem;
@@ -129,7 +127,6 @@ main{
 
 @media (max-width: 800px) {
 
-    /* Corrigido de 'display' para 'font-size' */
     .logo {
         font-size: 1.2rem;
     }
@@ -139,7 +136,6 @@ main{
         cursor: pointer;
     }
 
-    /* Esconde o menu no mobile por padrão */
     .nav-links {
         position: absolute;
         background-color: #2c2c2c;
@@ -152,7 +148,6 @@ main{
         justify-content: center;
     }
 
-    /* Exibe o menu apenas quando a classe .show-menu estiver ativa */
     .show-menu .nav-links {
         display: block;
         display: flex;
@@ -164,7 +159,6 @@ main{
         padding: 1rem 0;   
     }
     
-    /* Corrigido o seletor (removido ponto de '.nav') */
     nav ul li {
         text-align: center;
         padding: 0.8rem 0;
