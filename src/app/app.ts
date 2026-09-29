@@ -10,8 +10,12 @@ import { RouterOutlet, RouterLink } from '@angular/router';
 })
 export class App {
   isMenuOpen = false;
+isPesquisa: any;
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+  togglePesquisa():void{
+    this.isPesquisa=!!this.isPesquisa;
   }
 }

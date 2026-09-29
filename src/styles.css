@@ -33,7 +33,7 @@ body {
 }
 
 .logo {
-    color: #007bff;
+    color: #09ff00;
     font-size: 1.5rem;
     font-weight: bold;
     align-items: center;
@@ -85,7 +85,7 @@ nav ul li a:hover {
     margin-right: 1rem;
 }
 
-.menu-icon {
+.menu-icon{
     display: none;
 }
 

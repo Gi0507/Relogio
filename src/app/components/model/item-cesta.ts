@@ -1,7 +1,9 @@
 import { Produto } from "./produto";    
 
 export class ItemCesta {
-    produto: Produto | undefined
+
+    produto: Produto = new Produto();
+    quantidade: number = 1;
     quantity: number|undefined
     precoTotal: number | undefined
     valorTotal: number;
