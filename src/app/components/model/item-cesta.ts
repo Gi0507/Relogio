@@ -7,6 +7,7 @@ export class ItemCesta {
     quantity: number|undefined
     precoTotal: number | undefined
     valorTotal: number;
+cestaservice: any;
 
     constructor(produto: Produto) {
         this.produto = produto;

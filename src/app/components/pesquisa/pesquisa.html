@@ -1,0 +1,12 @@
+<div class="caixa-pesquisa" [class.aberta]="pesquisaAberta">
+  <input 
+    type="text" 
+    class="input-pesquisa" 
+    placeholder="Buscar relógio..." 
+    [(ngModel)]="termoBusca"
+  />
+  <button type="button" class="btn-pesquisa" (click)="alternarPesquisa()" aria-label="Pesquisar">
+    <!-- Ícone (pode ser Bootstrap Icons, FontAwesome ou SVG) -->
+    <i class="bi bi-search">🔍</i>
+  </button>
+</div>

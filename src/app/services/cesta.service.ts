@@ -27,13 +27,19 @@ export class CestaService {
       itemExistente.quantidade++;
     } else {
       // Se não existir, adiciona como um novo item
-      this.itens.push({ produto, quantidade: 1 });
+      this.itens.push({
+          produto, quantidade: 1,
+          quantity: undefined,
+          precoTotal: undefined,
+          valorTotal: 0
+      });
     }
 
     // Salva a lista atualizada no localStorage
     localStorage.setItem('cesta', JSON.stringify(this.itens));
   }
 
+  
   // Retorna os produtos que estão na cesta
   obterItens(): ItemCesta[] {
     return this.itens;

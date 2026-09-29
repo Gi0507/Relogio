@@ -1,18 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; // 1. Import do FormsModule
 import { Produto } from '../model/produto';
 import { CestaService } from '../../services/cesta.service';
+import { ProdutoService } from '../../services/produto.service';
+
 @Component({
   selector: 'app-vitrine',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule], // 2. FormsModule adicionado aqui
   templateUrl: './vitrine.html',
   styleUrl: './vitrine.css'
 })
-export class Vitrine {
+export class Vitrine implements OnInit {
   categoriaAtiva: string = 'todos';
+  pesquisaAberta: boolean = false;
+  termoBusca: string = '';
 
-  // Catálogo completo de relógios masculinos e femininos
   listaProdutos: Produto[] = [
     // --- MASCULINOS ---
     {
@@ -24,7 +28,7 @@ export class Vitrine {
       valor: 550.00,
       promo: 420.00,
       estrelas: 5,
-      imagem: 'relogios/g-7900a-4dr_1.png'
+      imagem: 'assets/relogios/g-7900a-4dr_1.png' // Corrigido prefixo assets/
     },
     {
       codigo: 102,
@@ -35,7 +39,7 @@ export class Vitrine {
       valor: 890.00,
       promo: 750.00,
       estrelas: 4,
-      imagem: 'images/products/product-2.png'
+      imagem: 'assets/images/products/product-2.png'
     },
     {
       codigo: 103,
@@ -46,7 +50,7 @@ export class Vitrine {
       valor: 460.00,
       promo: 0,
       estrelas: 4,
-      imagem: 'images/products/product-3.png'
+      imagem: 'assets/images/products/product-3.png'
     },
     {
       codigo: 104,
@@ -57,7 +61,7 @@ export class Vitrine {
       valor: 320.00,
       promo: 260.00,
       estrelas: 5,
-      imagem: 'images/products/product-4.png'
+      imagem: 'assets/images/products/product-4.png'
     },
 
     // --- FEMININOS ---
@@ -70,7 +74,7 @@ export class Vitrine {
       valor: 520.00,
       promo: 410.00,
       estrelas: 5,
-      imagem: 'images/products/product-5.png'
+      imagem: 'assets/images/products/product-5.png'
     },
     {
       codigo: 202,
@@ -81,7 +85,7 @@ export class Vitrine {
       valor: 680.00,
       promo: 590.00,
       estrelas: 4,
-      imagem: 'images/products/product-6.png'
+      imagem: 'assets/images/products/product-6.png'
     },
     {
       codigo: 203,
@@ -92,7 +96,7 @@ export class Vitrine {
       valor: 350.00,
       promo: 0,
       estrelas: 4,
-      imagem: 'images/products/product-7.png'
+      imagem: 'assets/images/products/product-7.png'
     },
     {
       codigo: 204,
@@ -103,32 +107,56 @@ export class Vitrine {
       valor: 610.00,
       promo: 490.00,
       estrelas: 5,
-      imagem: 'images/products/product-1.png'
+      imagem: 'assets/images/products/product-1.png'
     }
   ];
-relogio: any;
 
-  // Retorna os produtos filtrados conforme a aba selecionada
-  get produtosFiltrados(): Produto[] {
-    if (this.categoriaAtiva === 'todos') {
-      return this.listaProdutos;
-    }
-    return this.listaProdutos.filter(p => p.categoria.toLowerCase() === this.categoriaAtiva);
+  constructor(
+    private cestaService: CestaService  ) {}
+
+  ngOnInit(): void {
+    /*
+    this.produtoService.listarProdutos().subscribe({
+      next: (dados: Produto[]) => this.listaProdutos = dados,
+      error: (err: any) => console.error('Erro ao carregar produtos:', err)
+    });
+    */
   }
 
-  // Altera a categoria ativa do filtro
+  // Getter unificado (Categoria + Busca por Texto)
+  get produtosFiltrados(): Produto[] {
+    return this.listaProdutos.filter(produto => {
+      const bateuCategoria = 
+        this.categoriaAtiva === 'todos' || 
+        produto.categoria.toLowerCase() === this.categoriaAtiva.toLowerCase();
+
+      const termo = this.termoBusca.trim().toLowerCase();
+      const bateuBusca = 
+        !termo || 
+        produto.nome.toLowerCase().includes(termo) || 
+        produto.descritivo.toLowerCase().includes(termo);
+
+      return bateuCategoria && bateuBusca;
+    });
+  }
+
   filtrarPor(categoria: string): void {
     this.categoriaAtiva = categoria;
   }
 
-  // Gera o texto visual de estrelas
+  alternarPesquisa(): void {
+    this.pesquisaAberta = !this.pesquisaAberta;
+    if (!this.pesquisaAberta) {
+      this.termoBusca = '';
+    }
+  }
+
   renderizarEstrelas(qtd: number): string {
     return '★'.repeat(qtd) + '☆'.repeat(5 - qtd);
   }
-  addcesta(produto: Produto): void {
-  }
-  constructor(private cestaService: CestaService) {}
+
   comprar(relogio: Produto): void {
     this.cestaService.adicionarProduto(relogio);
+    alert(`${relogio.nome} foi adicionado à cesta!`);
   }
 }
