@@ -10,7 +10,7 @@
       <th>Item</th>
       <th class="text-center">Quantidade</th>
       <th>Valor</th>
-      <th>Ações</th>
+      <th class="text-center">Remover</th>
     </tr>
   </thead>
   <tbody>
@@ -29,8 +29,8 @@
           <button class="btn btn-outline-secondary" (click)="aumentar(obj.produto?.codigo)">+</button>
         </div>
       </td>
-      <td>{{ obj.valorTotal | currency:'BRL':'symbol':'1.2-2' }}</td>
-      <td>
+      <td>R$ {{ obj.valorTotal }}</td>
+      <td class="text-center">
         <button class="btn btn-danger btn-sm" (click)="remover(obj.produto?.codigo)">
           &times;
         </button>
@@ -43,12 +43,13 @@
   <tfoot *ngIf="itens.length > 0">
     <tr>
       <td colspan="3" class="fw-bold">Total</td>
-      <td colspan="2" class="fw-bold text-end pe-4">{{ valorCesta | currency:'BRL':'symbol':'1.2-2' }}</td>
+      <td colspan="2" class="fw-bold text-end">R$ {{ valorCesta }}</td>
     </tr>
   </tfoot>
 </table>
 
 <div class="botoes">
+  <button class="btn btn-outline-danger me-2" (click)="limpar()" *ngIf="itens.length > 0">Limpar Cesta</button>
   <a href="/"><button class="btn btn-outline-info">Continuar comprando</button></a>
   <button class="btn btn-success ms-2" [disabled]="itens.length === 0">Finalizar pedido</button>
 </div>

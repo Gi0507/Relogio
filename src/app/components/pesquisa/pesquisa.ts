@@ -1,24 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Necessário para o input de busca
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-vitrine',
+  selector: 'app-pesquisa',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule], // FormsModule necessário para [(ngModel)]
   templateUrl: './pesquisa.html',
   styleUrl: './pesquisa.css'
 })
-export class Vitrine {
-  pesquisaAberta: boolean = false;
-  termoBusca: string = '';
+export class Pesquisa {
+  termo: string = '';
+  private router = inject(Router);
 
-  alternarPesquisa(): void {
-    this.pesquisaAberta = !this.pesquisaAberta;
-    
-    // Opcional: limpa o texto ao fechar
-    if (!this.pesquisaAberta) {
-      this.termoBusca = '';
+  buscar(): void {
+    if (this.termo.trim()) {
+      this.router.navigate(['/pesquisa'], { queryParams: { q: this.termo } });
     }
   }
 }

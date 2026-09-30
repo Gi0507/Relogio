@@ -1,0 +1,13 @@
+.barra_pesquisa {
+  background-color: #2c2c2c;
+  padding: 1rem 2rem;
+  text-align: center;
+  font-size: 1.2rem;
+}
+.barra_pesquisa input{
+  width: 80%;
+  padding: 10px;
+  background-color: #2c2c2c;
+  border-radius: 999px;
+  border-color: #99ff00;
+}

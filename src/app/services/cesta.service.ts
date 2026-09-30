@@ -1,47 +1,74 @@
-import { Injectable } from '@angular/core';
-import { Produto } from '../components/model/produto';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { ItemCesta } from '../components/model/item-cesta';
+import { Produto } from '../components/model/produto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CestaService {
-  private itens: ItemCesta[] = [];
+  private platformId = inject(PLATFORM_ID);
+  private chaveStorage = 'cesta';
 
-  constructor() {
+  obterItens(): ItemCesta[] {
+    if (isPlatformBrowser(this.platformId)) {
+      const cestaJson = localStorage.getItem(this.chaveStorage);
+      return cestaJson ? JSON.parse(cestaJson) : [];
+    }
+    return [];
+  }
 
-    // Carrega os itens salvos no navegador ao abrir o site
-    const dadosSalvos = localStorage.getItem('cesta');
-    if (dadosSalvos) {
-      this.itens = JSON.parse(dadosSalvos);
+  salvarItens(itens: ItemCesta[]): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem(this.chaveStorage, JSON.stringify(itens));
     }
   }
 
-  // --- AQUI ESTÁ A FUNÇÃO ADICIONAR PRODUTO ---
-  adicionarProduto(produto: Produto): void {
-    // Verifica se o relógio já está na cesta
-    const itemExistente = this.itens.find(item => item.produto.codigo === produto.codigo);
+  // Método que faltava na classe
+  adicionarProduto(produto: Produto, quantidade: number = 1): void {
+    const itens = this.obterItens();
+    const itemExistente = itens.find(i => i.produto?.codigo === produto.codigo);
 
     if (itemExistente) {
-      // Se já existir, aumenta apenas a quantidade
-      itemExistente.quantidade++;
+      itemExistente.quantity = (itemExistente.quantity || 0) + quantidade;
+      itemExistente.valorTotal = itemExistente.quantity * (produto.valor || 0);
     } else {
-      // Se não existir, adiciona como um novo item
-      this.itens.push({
-          produto, quantidade: 1,
-          quantity: undefined,
-          precoTotal: undefined,
-          valorTotal: 0
+      itens.push({
+        produto: produto,
+        quantity: quantidade,
+        valorTotal: quantidade * (produto.valor || 0),
+        quantidade: 0,
+        precoTotal: undefined,
+        cestaservice: undefined
       });
     }
 
-    // Salva a lista atualizada no localStorage
-    localStorage.setItem('cesta', JSON.stringify(this.itens));
+    this.salvarItens(itens);
   }
 
-  
-  // Retorna os produtos que estão na cesta
-  obterItens(): ItemCesta[] {
-    return this.itens;
+  alterarQuantidade(codigo: number, delta: number): void {
+    const itens = this.obterItens();
+    const item = itens.find(i => i.produto?.codigo === codigo);
+    if (item) {
+      item.quantity = (item.quantity || 1) + delta;
+      if (item.quantity <= 0) {
+        this.removerItem(codigo);
+        return;
+      }
+      item.valorTotal = item.quantity * (item.produto?.valor || 0);
+      this.salvarItens(itens);
+    }
+  }
+
+  removerItem(codigo: number): void {
+    let itens = this.obterItens();
+    itens = itens.filter(i => i.produto?.codigo !== codigo);
+    this.salvarItens(itens);
+  }
+
+  limparCesta(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem(this.chaveStorage);
+    }
   }
 }

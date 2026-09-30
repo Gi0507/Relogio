@@ -1,23 +1,20 @@
 <main>
-  <!-- EXPOSITOR -->
-  <div class="background">
-    <div class="conteudo">
-      <div class="col col-3">
-        <img src="images/products/product-1.png" alt="Expositor 1">
-        <img src="images/products/product-2.png" alt="Expositor 2">
-        <img src="images/products/product-3.png" alt="Expositor 3">
-      </div>
+<div class="background">
+  <div class="conteudo">
+    <div class="col col-3">
+      <img src="relogios/ominitrix/ominitrix.webp " alt="Omnitrix Special Edition" class="img-fluid rounded product-img" />
+      <img src="relogios/ominitrix/ominitrix2.webp" alt="Omnitrix FX Custom" class="img-fluid rounded product-img" />
+      <img src="relogios/g-7900a-4dr_1.png" alt="Chrono Steel Black" class="img-fluid rounded product-img" />
     </div>
   </div>
-
-  <!-- VITRINE DE PRODUTOS -->
-  <div class="produtos conteudo">
+</div>
+  <!-- VITRINE DE PRODUTOS SELECIONADOS -->
+  <div class="produtos conteudo" *ngIf="produtosSelecionados.length > 0">
     <h3 class="titulo">Produtos Selecionados</h3>
     <div class="underline"></div>
 
     <div class="col col4">
-      <!-- O *ngFor repete este card para cada relógio da lista -->
-      <div class="card-produto shadow-sm p-3 rounded-3" *ngFor="let relogio of listaProdutos">
+      <div class="card-produto shadow-sm p-3 rounded-3" *ngFor="let relogio of produtosSelecionados">
         
         <!-- Imagem do Relógio -->
         <div class="img-container p-3 text-center">
@@ -32,17 +29,16 @@
           </div>
 
           <div class="mt-3">
-            <!-- Avaliação por Estrelas -->
             <div class="estrelas text-warning mb-2">
               {{ renderizarEstrelas(relogio.estrelas) }}
             </div>
 
-            <!-- Exibição de Preço -->
             <div class="d-flex align-items-baseline gap-2">
               <ng-container *ngIf="relogio.promo > 0; else precoComum">
-                <span class="text-muted text-decoration-line-through small">
+                <span class="preco-antigo">
                   {{ relogio.valor | currency:'BRL':'symbol':'1.2-2' }}
                 </span>
+                <!-- Valor com promoção -->
                 <span class="fs-5 fw-bold text-primary">
                   {{ relogio.promo | currency:'BRL':'symbol':'1.2-2' }}
                 </span>
@@ -55,8 +51,73 @@
               </ng-template>
             </div>
 
-            <!-- Botão Adicionar ao Carrinho -->
-            <button class="btn btn-primary w-100 mt-3 fw-semibold" (click)="comprar(relogio)" >
+            <button class="btn" (click)="comprar(relogio)">
+              Comprar
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  
+  <div class="background">
+    <div class="conteudo">
+      <div class="botao segundo">
+        <div class="btne">
+          <h2>Um novo estilo</h2>
+          <p>Compre produtos de qualidade e com preços acessíveis</p>
+          <button>Compre Agora &#8594;</button>
+        </div>
+        <div class="btnd">
+          <img src="relogios/rolex4.webp" alt="Produto em destaque">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- PRODUTOS EM DESTAQUE -->
+  <div class="produtos conteudo" *ngIf="produtosDestaque.length > 0">
+    <h3 class="titulo">Produtos em Destaque</h3>
+    <div class="underline"></div>
+    
+    <div class="col col4">
+      <div class="card-produto shadow-sm p-3 rounded-3" *ngFor="let relogio of produtosDestaque">
+        
+        <div class="img-container p-3 text-center">
+          <img [src]="relogio.imagem" [alt]="relogio.nome" class="img-fluid rounded product-img">
+        </div>
+        
+        <div class="card-body d-flex flex-column justify-content-between pt-0">
+          <div>
+            <h5 class="card-title fs-6 fw-bold text-dark">{{ relogio.nome }}</h5>
+            <p class="card-text text-muted small lh-sm">{{ relogio.descritivo }}</p>
+          </div>
+
+          <div class="mt-3">
+            <div class="estrelas text-warning mb-2">
+              {{ renderizarEstrelas(relogio.estrelas) }}
+            </div>
+
+            <div class="d-flex align-items-baseline gap-2">
+              <ng-container *ngIf="relogio.promo > 0; else precoComumDestaque">
+                <!-- Valor original em cinzento claro e riscado -->
+                <span class="preco-antigo">
+                  {{ relogio.valor | currency:'BRL':'symbol':'1.2-2' }}
+                </span>
+                <!-- Valor com promoção -->
+                <span class="fs-5 fw-bold text-primary">
+                  {{ relogio.promo | currency:'BRL':'symbol':'1.2-2' }}
+                </span>
+              </ng-container>
+
+              <ng-template #precoComumDestaque>
+                <span class="fs-5 fw-bold text-dark">
+                  {{ relogio.valor | currency:'BRL':'symbol':'1.2-2' }}
+                </span>
+              </ng-template>
+            </div>
+
+            <button class="btn btn-primary w-100 mt-3 fw-semibold" (click)="comprar(relogio)">
               Comprar
             </button>
           </div>
@@ -66,27 +127,8 @@
     </div>
   </div>
 
-  <!-- PRODUTOS EM DESTAQUE -->
-  <div class="produtos conteudo">
-    <h3 class="titulo">Produtos em Destaque</h3>
-    <div class="underline"></div>
-    <div class="col col4">
-    </div>
+  <div class="text-center my-5" *ngIf="produtosSelecionados.length === 0 && produtosDestaque.length === 0">
+    <h4>Nenhum relógio encontrado para a sua busca.</h4>
   </div>
 
-  <!-- BANNER FINAL -->
-  <div class="background">
-    <div class="conteudo">
-      <div class="botao segundo">
-        <div class="btne">
-          <h2>Um novo estilo ao seu trabalho</h2>
-          <p>Compre produtos de qualidade e com preços acessíveis</p>
-          <button>Compre Agora &#8594;</button>
-        </div>
-        <div class="btnd">
-          <img src="images/exclusive.png" alt="Produto em destaque">
-        </div>
-      </div>
-    </div>
-  </div>
 </main>

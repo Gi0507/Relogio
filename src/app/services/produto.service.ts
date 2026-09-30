@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Produto } from '../components/model/produto'; // Aponta para a pasta onde está a sua classe Produto
+import { Produto } from '../components/model/produto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProdutoService {
-  // Endereço onde o json-server roda a lista de produtos
-  private API_URL = 'http://localhost:3000/produtos';
+  private http = inject(HttpClient);
+  private apiUrl = 'http://localhost:3000/produtos';
 
-  constructor(private http: HttpClient) {}
+  listar(): Observable<Produto[]> {
+    return this.http.get<Produto[]>(this.apiUrl);
+  }
 
-  listarProdutos(): Observable<Produto[]> {
-    return this.http.get<Produto[]>(this.API_URL);
-    
+  buscarPorTermo(termo: string): Observable<Produto[]> {
+    return this.http.get<Produto[]>(`${this.apiUrl}?q=${encodeURIComponent(termo)}`);
   }
 }

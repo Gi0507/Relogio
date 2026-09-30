@@ -8,7 +8,7 @@ import { ProdutoService } from '../../services/produto.service';
 @Component({
   selector: 'app-vitrine',
   standalone: true,
-  imports: [CommonModule, FormsModule], // 2. FormsModule adicionado aqui
+  imports: [CommonModule, FormsModule],
   templateUrl: './vitrine.html',
   styleUrl: './vitrine.css'
 })
@@ -28,7 +28,7 @@ export class Vitrine implements OnInit {
       valor: 550.00,
       promo: 420.00,
       estrelas: 5,
-      imagem: 'assets/relogios/g-7900a-4dr_1.png' // Corrigido prefixo assets/
+      imagem: 'relogios/g-7900a-4dr_1.png' // Corrigido prefixo assets/
     },
     {
       codigo: 102,
@@ -39,7 +39,7 @@ export class Vitrine implements OnInit {
       valor: 890.00,
       promo: 750.00,
       estrelas: 4,
-      imagem: 'assets/images/products/product-2.png'
+      imagem: 'relogios/dw-6900.avif'
     },
     {
       codigo: 103,
@@ -50,7 +50,7 @@ export class Vitrine implements OnInit {
       valor: 460.00,
       promo: 0,
       estrelas: 4,
-      imagem: 'assets/images/products/product-3.png'
+      imagem: 'relogios/gba-900CB.avif'
     },
     {
       codigo: 104,
@@ -61,7 +61,7 @@ export class Vitrine implements OnInit {
       valor: 320.00,
       promo: 260.00,
       estrelas: 5,
-      imagem: 'assets/images/products/product-4.png'
+      imagem: 'relogios/gba-950.avif'
     },
 
     // --- FEMININOS ---
@@ -74,7 +74,7 @@ export class Vitrine implements OnInit {
       valor: 520.00,
       promo: 410.00,
       estrelas: 5,
-      imagem: 'assets/images/products/product-5.png'
+      imagem: 'relogio/gmw5000.a'
     },
     {
       codigo: 202,
@@ -115,15 +115,14 @@ export class Vitrine implements OnInit {
     private cestaService: CestaService  ) {}
 
   ngOnInit(): void {
-    /*
+    
     this.produtoService.listarProdutos().subscribe({
       next: (dados: Produto[]) => this.listaProdutos = dados,
       error: (err: any) => console.error('Erro ao carregar produtos:', err)
     });
-    */
+    
   }
 
-  // Getter unificado (Categoria + Busca por Texto)
   get produtosFiltrados(): Produto[] {
     return this.listaProdutos.filter(produto => {
       const bateuCategoria = 

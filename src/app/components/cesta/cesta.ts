@@ -1,6 +1,5 @@
-import { Component, PLATFORM_ID, inject } from '@angular/common';
+import { Component, PLATFORM_ID, inject, OnInit } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { OnInit } from '@angular/core';
 import { ItemCesta } from '../model/item-cesta';
 import { CestaService } from '../../services/cesta.service';
 
@@ -13,9 +12,9 @@ import { CestaService } from '../../services/cesta.service';
 })
 export class Cesta implements OnInit {
   private platformId = inject(PLATFORM_ID);
-  private cestaService = inject(CestaService); // Injeção de dependência corrigida
+  private cestaService = inject(CestaService); // Injeção correta do serviço
 
-  mensagem: string = "";
+  mensagem: string = '';
   valorCesta: number = 0;
   itens: ItemCesta[] = [];
 
@@ -25,26 +24,23 @@ export class Cesta implements OnInit {
 
   carregarCesta(): void {
     if (isPlatformBrowser(this.platformId)) {
-      const cestaJson = localStorage.getItem("cesta");
-      if (cestaJson) {
-        this.itens = JSON.parse(cestaJson);
-      }
+      this.itens = this.cestaService.obterItens();
     }
     this.calculaTotal();
   }
 
   calculaTotal(): void {
-    this.valorCesta = this.itens.reduce((total, item) => total + (item.valorTotal || 0), 0);
+    this.valorCesta = this.itens.reduce((acc, item) => acc + (item.valorTotal || 0), 0);
   }
 
   aumentar(codigo?: number): void {
-    if (!codigo) return;
+    if (codigo === undefined) return;
     this.cestaService.alterarQuantidade(codigo, 1);
     this.carregarCesta();
   }
 
   diminuir(codigo?: number): void {
-    if (!codigo) return;
+    if (codigo === undefined) return;
     this.cestaService.alterarQuantidade(codigo, -1);
     this.carregarCesta();
   }
@@ -52,13 +48,11 @@ export class Cesta implements OnInit {
   remover(codigo?: number): void {
     if (codigo === undefined) return;
     this.cestaService.removerItem(codigo);
-    this.itens = this.itens.filter(item => item.produto?.codigo !== codigo);
-    this.calculaTotal();
+    this.carregarCesta();
   }
 
   limpar(): void {
     this.cestaService.limparCesta();
-    this.itens = [];
-    this.calculaTotal();
+    this.carregarCesta();
   }
 }
