@@ -7,6 +7,9 @@ import { Produto } from '../components/model/produto';
   providedIn: 'root'
 })
 export class ProdutoService {
+  listarProdutos() {
+    throw new Error('Method not implemented.');
+  }
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:3000/produtos';
 

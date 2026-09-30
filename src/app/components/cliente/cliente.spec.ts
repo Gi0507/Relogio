@@ -1,18 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Vitrine } from './vitrine';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Cliente } from './cliente';
 
-describe('Vitrine', () => {
-  let component: Vitrine;
-  let fixture: ComponentFixture<Vitrine>;
+describe('Cliente', () => {
+  let component: Cliente;
+  let fixture: ComponentFixture<Cliente>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Vitrine, CommonModule, Router],
+      imports: [Cliente],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Vitrine);
+    fixture = TestBed.createComponent(Cliente);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

@@ -1,7 +1,8 @@
-export class Cliente {
-    nome: string=""
-    cpf: string=""
-    email: string=""
-    dataNascimento: string=""
-    endereco: string=""
+export interface Cliente {
+  id?: number | string;
+  nome: string;
+  email: string;
+  telefone?: string;
+  morada?: string;
+  nif?: string;
 }
